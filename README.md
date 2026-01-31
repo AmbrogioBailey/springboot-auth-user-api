@@ -87,8 +87,9 @@ git clone https://github.com/AmbrogioBailey/springboot-auth-user-api.git
 cd springboot-auth-user-api
 ./mvnw spring-boot:run
 Server runs at:
-
 http://localhost:8080
+
+```
 👤 Author
 Ambrogio Bailey
 
@@ -97,7 +98,7 @@ GitHub: https://github.com/AmbrogioBailey
 LinkedIn: https://www.linkedin.com/in/ambrogio-bailey-b67529373/
 
 
----
+
 
 
 
