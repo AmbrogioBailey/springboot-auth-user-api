@@ -19,11 +19,27 @@ This project demonstrates:
 - Spring Data JPA
 - H2 Database
 - Jakarta Validation
+- Lombok
 - Maven
 - Postman
 
 ---
 
+## ✅ Example Validation Error Response (400 Bad Request)
+
+This API returns structured field-level validation errors when input is invalid:
+
+```json
+{
+  "status": 400,
+  "error": "Bad Request",
+  "message": "Validation failed",
+  "errors": {
+    "email": "must be a well-formed email address",
+    "password": "size must be at least 8"
+  }
+}
+```
 ## 📂 Project Structure
 ![Project Structure](screenshots/project-structure.png)
 
@@ -67,16 +83,18 @@ This project demonstrates:
 ## ▶️ Run Locally
 
 ```bash
-git clone https://github.com/AmbrogioBailey/<your-repo-name>.git
-cd <your-repo-name>
+git clone https://github.com/AmbrogioBailey/springboot-auth-user-api.git
+cd springboot-auth-user-api
 ./mvnw spring-boot:run
+
 Server:
 
 http://localhost:8080
 
-👤 Author
-Ambrogio Bailey
+## 👤 Author
 
-GitHub: https://github.com/AmbrogioBailey
+**Ambrogio Bailey**
 
-LinkedIn: https://www.linkedin.com/in/ambrogio-bailey-b67529373/
+- GitHub: https://github.com/AmbrogioBailey  
+- LinkedIn: https://www.linkedin.com/in/ambrogio-bailey-b67529373/
+
