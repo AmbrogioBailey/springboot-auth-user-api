@@ -1,11 +1,19 @@
 package com.ambrogio.springbootauthuserapi.dto;
 
 import com.ambrogio.springbootauthuserapi.model.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserResponse {
 
     private Long id;
@@ -13,24 +21,7 @@ public class UserResponse {
     private String email;
     private Set<Role> roles;
 
-    public UserResponse(Long id, String username, String email, Set<Role> roles) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.roles = roles;
-    }
 
-    public Long getId() {
-        return id;
-    }
 
-    public String getUsername() {
-        return username;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public Set<Role> getRoles() {
-        return roles;
-    }
 }
+

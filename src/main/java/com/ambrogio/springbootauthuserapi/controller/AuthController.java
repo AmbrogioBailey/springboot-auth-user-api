@@ -20,21 +20,25 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> register(
-            @Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
 
         User savedUser = userService.registerUser(request);
-        UserResponse response = new UserResponse(
-                savedUser.getId(),
-                savedUser.getUsername(),
-                savedUser.getEmail(),
-                savedUser.getRoles()
-        );
+
+        UserResponse response = UserResponse.builder()
+                .id(savedUser.getId())
+                .username(savedUser.getUsername())
+                .email(savedUser.getEmail())
+                .roles(savedUser.getRoles())
+                .build();
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-    @GetMapping("/api/test/secure")
+
+    // Note: because the class already has /api/auth at the top,
+    // this endpoint will become /api/auth/test/secure
+    @GetMapping("/test/secure")
     public String secure() {
         return "SECURE";
     }
-
 }
+

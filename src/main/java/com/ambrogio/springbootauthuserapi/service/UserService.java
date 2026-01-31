@@ -7,13 +7,11 @@ import com.ambrogio.springbootauthuserapi.exception.UsernameAlreadyExistsExcepti
 import com.ambrogio.springbootauthuserapi.model.Role;
 import com.ambrogio.springbootauthuserapi.model.User;
 import com.ambrogio.springbootauthuserapi.repository.UserRepository;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// @Service tells spring this is a business component
 @Service
 public class UserService {
 
@@ -24,43 +22,51 @@ public class UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
     public List<UserResponse> getAllUsers() {
-        return userRepository.findAll().stream()
-                .map(u -> new UserResponse(
-                        u.getId(),
-                        u.getUsername(),
-                        u.getEmail(),
-                        u.getRoles()
-                ))
+        return userRepository.findAll()
+                .stream()
+                .map(u -> UserResponse.builder()
+                        .id(u.getId())
+                        .username(u.getUsername())
+                        .email(u.getEmail())
+                        .roles(u.getRoles())
+                        .build())
                 .toList();
     }
+
     public User registerUser(RegisterRequest request) {
+
+        // Build user object
         User user = new User();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
 
+        // Basic password checks (we can move these to validation annotations later)
         if (request.getPassword() == null || request.getPassword().isBlank()) {
-            throw new IllegalArgumentException("Password hash cannot be empty");
+            throw new IllegalArgumentException("Password cannot be empty");
         }
-        if  (request.getPassword().length() < 8) {
-            throw new IllegalArgumentException("Password length cannot be less than 8 characters");
+        if (request.getPassword().length() < 8) {
+            throw new IllegalArgumentException("Password must be at least 8 characters");
         }
-        if  (userRepository.findByUsername(user.getUsername()).isPresent()) {
-           throw new UsernameAlreadyExistsException("Username already exists: " + user.getUsername());
-       }
+
+        // Uniqueness checks
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new UsernameAlreadyExistsException("Username already exists: " + user.getUsername());
+        }
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-           throw new EmailAlreadyExistsException("Email already exists: " + user.getEmail());
-       }
+            throw new EmailAlreadyExistsException("Email already exists: " + user.getEmail());
+        }
 
+        // Hash password + assign default role
+        user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
 
-        user.setPasswordHash(
-                passwordEncoder.encode(request.getPassword())
-        );
         user.getRoles().clear();
+        user.getRoles().add(Role.USER);
 
-       user.getRoles().add(Role.USER);
-
-       return userRepository.save(user);
+        return userRepository.save(user);
     }
-
 }
+
+
+
