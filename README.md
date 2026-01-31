@@ -86,15 +86,21 @@ This API returns structured field-level validation errors when input is invalid:
 git clone https://github.com/AmbrogioBailey/springboot-auth-user-api.git
 cd springboot-auth-user-api
 ./mvnw spring-boot:run
-
-Server:
+Server runs at:
 
 http://localhost:8080
+👤 Author
+Ambrogio Bailey
 
-## 👤 Author
+GitHub: https://github.com/AmbrogioBailey
 
-**Ambrogio Bailey**
+LinkedIn: https://www.linkedin.com/in/ambrogio-bailey-b67529373/
 
-- GitHub: https://github.com/AmbrogioBailey  
-- LinkedIn: https://www.linkedin.com/in/ambrogio-bailey-b67529373/
+
+---
+
+
+
+
+
 
